@@ -5,7 +5,7 @@ index 8a9634b9..85c1bc28 100644
 @@ -47,6 +47,12 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ 100.0
  ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ 200.0
  ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_IO 17
+ ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_IO 18
 +ad_ip_parameter sys_ps7 CONFIG.PCW_EN_ENET0 1
 +ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_PERIPHERAL_ENABLE 1
 +ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_ENET0_IO {MIO 16 .. 27}
@@ -47,10 +47,10 @@ index 8a9634b9..85c1bc28 100644
  ad_ip_parameter sys_ps7 CONFIG.PCW_IRQ_F2P_MODE REVERSE
  ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_0_PULLUP {enabled}
 diff --git a/projects/pluto/system_constr.xdc b/projects/pluto/system_constr.xdc
-index 67a9558c..9bf4e924 100644
+index 59611ccc8..e7bc2c396 100644
 --- a/projects/pluto/system_constr.xdc
 +++ b/projects/pluto/system_constr.xdc
-@@ -1,69 +1,69 @@
+@@ -6,60 +6,60 @@
  # constraints
  # ad9361 (SWAP == 0x1)
  
@@ -104,19 +104,10 @@ index 67a9558c..9bf4e924 100644
 -set_property  -dict {PACKAGE_PIN  K12  IOSTANDARD LVCMOS18} [get_ports enable]
 -set_property  -dict {PACKAGE_PIN  K11  IOSTANDARD LVCMOS18} [get_ports txnrx]
 -
--set_property  -dict {PACKAGE_PIN  M14  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports iic_scl]
--set_property  -dict {PACKAGE_PIN  N14  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports iic_sda]
--
 -set_property  -dict {PACKAGE_PIN  E12  IOSTANDARD LVCMOS18  PULLTYPE PULLUP} [get_ports spi_csn]
 -set_property  -dict {PACKAGE_PIN  E11  IOSTANDARD LVCMOS18} [get_ports spi_clk]
 -set_property  -dict {PACKAGE_PIN  E13  IOSTANDARD LVCMOS18} [get_ports spi_mosi]
 -set_property  -dict {PACKAGE_PIN  F12  IOSTANDARD LVCMOS18} [get_ports spi_miso]
--
--set_property  -dict {PACKAGE_PIN  R10  IOSTANDARD LVCMOS18} [get_ports pl_spi_clk_o]
--set_property  -dict {PACKAGE_PIN  M12  IOSTANDARD LVCMOS18} [get_ports pl_spi_miso]
--set_property  -dict {PACKAGE_PIN  K13  IOSTANDARD LVCMOS18} [get_ports pl_spi_mosi]
--
--set_property  -dict {PACKAGE_PIN  P8   IOSTANDARD LVCMOS18} [get_ports clk_out]
 +set_property  -dict {PACKAGE_PIN U18  IOSTANDARD LVCMOS18 } [get_ports rx_clk_in]
 +set_property  -dict {PACKAGE_PIN Y16  IOSTANDARD LVCMOS18 } [get_ports rx_frame_in]
 +set_property  -dict {PACKAGE_PIN V13  IOSTANDARD LVCMOS18 } [get_ports rx_data_in[0]]
@@ -167,23 +158,34 @@ index 67a9558c..9bf4e924 100644
 +set_property  -dict {PACKAGE_PIN U15  IOSTANDARD LVCMOS18} [get_ports enable]
 +set_property  -dict {PACKAGE_PIN U14  IOSTANDARD LVCMOS18} [get_ports txnrx]
 +
-+set_property  -dict {PACKAGE_PIN U17  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports iic_scl]
-+set_property  -dict {PACKAGE_PIN Y17  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports iic_sda]
-+
 +set_property  -dict {PACKAGE_PIN A20  IOSTANDARD LVCMOS18  PULLTYPE PULLUP} [get_ports spi_csn]
 +set_property  -dict {PACKAGE_PIN B19  IOSTANDARD LVCMOS18} [get_ports spi_clk]
 +set_property  -dict {PACKAGE_PIN B20  IOSTANDARD LVCMOS18} [get_ports spi_mosi]
 +set_property  -dict {PACKAGE_PIN C20  IOSTANDARD LVCMOS18} [get_ports spi_miso]
-+
-+set_property  -dict {PACKAGE_PIN P16  IOSTANDARD LVCMOS18} [get_ports pl_spi_clk_o]
-+set_property  -dict {PACKAGE_PIN U19  IOSTANDARD LVCMOS18} [get_ports pl_spi_miso]
-+set_property  -dict {PACKAGE_PIN V15  IOSTANDARD LVCMOS18} [get_ports pl_spi_mosi]
-+
+ 
+ # PL GPIOs
+ #
+@@ -71,13 +71,13 @@ set_property  -dict {PACKAGE_PIN  F12  IOSTANDARD LVCMOS18} [get_ports spi_miso]
+ # L7N  | N14         | PL_GPIO3 | IIC SDA  | IIC SDA |
+ # L9N  | M14         | PL_GPIO4 | IIC SCL  | IIC SCL |
+ 
+-set_property  -dict {PACKAGE_PIN  K13  IOSTANDARD LVCMOS18} [get_ports pl_gpio0]
+-set_property  -dict {PACKAGE_PIN  M12  IOSTANDARD LVCMOS18} [get_ports pl_gpio1]
+-set_property  -dict {PACKAGE_PIN  R10  IOSTANDARD LVCMOS18} [get_ports pl_gpio2]
+-set_property  -dict {PACKAGE_PIN  N14  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports pl_gpio3]
+-set_property  -dict {PACKAGE_PIN  M14  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports pl_gpio4]
++set_property  -dict {PACKAGE_PIN  V15  IOSTANDARD LVCMOS18} [get_ports pl_gpio0]
++set_property  -dict {PACKAGE_PIN  U19  IOSTANDARD LVCMOS18} [get_ports pl_gpio1]
++set_property  -dict {PACKAGE_PIN  P16  IOSTANDARD LVCMOS18} [get_ports pl_gpio2]
++set_property  -dict {PACKAGE_PIN  Y17  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports pl_gpio3]
++set_property  -dict {PACKAGE_PIN  U17  IOSTANDARD LVCMOS18 PULLTYPE PULLUP} [get_ports pl_gpio4]
+ 
+-set_property  -dict {PACKAGE_PIN  P8   IOSTANDARD LVCMOS18} [get_ports clk_out]
 +set_property  -dict {PACKAGE_PIN N17   IOSTANDARD LVCMOS18} [get_ports clk_out]
  
  create_clock -name rx_clk -period  16.27 [get_ports rx_clk_in]
  
-@@ -80,123 +80,123 @@ set_input_jitter clk_fpga_1 0.15
+@@ -94,123 +94,123 @@ set_input_jitter clk_fpga_1 0.15
  set_property IOSTANDARD LVCMOS18 [get_ports *fixed_io_mio*]
  set_property SLEW SLOW [get_ports *fixed_io_mio*]
  set_property DRIVE 8 [get_ports *fixed_io_mio*]
@@ -393,8 +395,7 @@ index 89d81a44..fec220a1 100644
  source $ad_hdl_dir/projects/scripts/adi_project_xilinx.tcl
  source $ad_hdl_dir/projects/scripts/adi_board.tcl
  
--set p_device "xc7z010clg225-1"
-+set p_device "xc7z010clg400-1"
- adi_project pluto
+-adi_project_create pluto 0 {} "xc7z010clg225-1"
++adi_project_create pluto 0 {} "xc7z010clg400-1"
  
  adi_project_files pluto [list \
