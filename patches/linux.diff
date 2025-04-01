@@ -1,8 +1,8 @@
 diff --git a/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts b/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts
-index 7aff4e197d0f..5313336a30a4 100644
+index fe5569225fd3..c2aac78d99cf 100644
 --- a/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts
 +++ b/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts
-@@ -17,46 +17,6 @@
+@@ -17,21 +17,6 @@
  #include <dt-bindings/gpio/gpio.h>
  #include <dt-bindings/interrupt-controller/irq.h>
  
@@ -21,8 +21,15 @@ index 7aff4e197d0f..5313336a30a4 100644
 -	};
 -};
 -
--&amba {
--	axi_spi: axi_quad_spi@7C430000 {
+ &amba {
+ 	axi_tdd_0: axi-tdd-0@7C440000 {
+ 		compatible = "adi,axi-tdd";
+@@ -60,29 +45,6 @@ iio_axi_tdd_0@0 {
+ 		"out_channel2_off_raw", "out_channel2_off_ms";
+ 		label = "iio-axi-tdd-0";
+ 	};
+-
+-	axi_spi: spi@7C430000 {
 -		#address-cells = <1>;
 -		#size-cells = <0>;
 -		bits-per-word = <8>;
@@ -44,12 +51,10 @@ index 7aff4e197d0f..5313336a30a4 100644
 -			spi-max-frequency = <125000000>;
 -		};
 -	};
--};
--
+ };
+ 
  &adc0_ad9364 {
- 	/* This property is controlled by u-boot environment. */
- 	adi,2rx-2tx-mode-enable;
-@@ -70,6 +30,11 @@
+@@ -98,6 +60,11 @@ &cf_ad9364_dac_core_0 {
  / {
  	model = "Analog Devices PlutoSDR Rev.C (Z7010/AD9363)";
  
@@ -61,7 +66,7 @@ index 7aff4e197d0f..5313336a30a4 100644
  	leds {
  		compatible = "gpio-leds";
  		led0 {
-@@ -92,3 +57,18 @@
+@@ -140,3 +107,18 @@ channel@1 {
  		};
  	};
  };
@@ -69,7 +74,7 @@ index 7aff4e197d0f..5313336a30a4 100644
 +&gem0 {
 +	status = "okay";
 +
-+    pinctrl-names = "default";
++	pinctrl-names = "default";
 +	pinctrl-0 = <&pinctrl_gem0_default>;
 +};
 +
@@ -77,10 +82,9 @@ index 7aff4e197d0f..5313336a30a4 100644
 +	status = "okay";
 +	dr_mode = "otg";
 +	usb-phy = <&usb_phy0>;
-+    pinctrl-names = "default";
-+    pinctrl-0 = <&pinctrl_usb0_default>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_usb0_default>;
 +};
-\ No newline at end of file
 diff --git a/arch/arm/boot/dts/zynq-pluto-sdr.dtsi b/arch/arm/boot/dts/zynq-pluto-sdr.dtsi
 index e936f48dbd73..bad6c46056a5 100644
 --- a/arch/arm/boot/dts/zynq-pluto-sdr.dtsi
@@ -99,11 +103,11 @@ index e936f48dbd73..bad6c46056a5 100644
  &sdhci0 {
 -	status = "disabled";
 +	status = "okay";
-+    disable-wp;
++	disable-wp;
  };
  
  &watchdog0 {
-@@ -50,12 +58,29 @@
+@@ -50,11 +58,28 @@
  };
  
  &usb0 {
@@ -113,7 +117,6 @@ index e936f48dbd73..bad6c46056a5 100644
  	status = "okay";
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&pinctrl_usb0_default>;
- 	usb-phy = <&usb_phy0>;
  };
  
 +&gem0 {
