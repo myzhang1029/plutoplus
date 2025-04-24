@@ -1,8 +1,8 @@
 diff --git a/projects/pluto/system_bd.tcl b/projects/pluto/system_bd.tcl
-index 8a9634b9..85c1bc28 100644
+index 0133b3f04..80ae58cee 100644
 --- a/projects/pluto/system_bd.tcl
 +++ b/projects/pluto/system_bd.tcl
-@@ -47,6 +47,12 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ 100.0
+@@ -54,6 +54,12 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ 100.0
  ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ 200.0
  ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE 1
  ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_IO 18
@@ -15,7 +15,7 @@ index 8a9634b9..85c1bc28 100644
  ad_ip_parameter sys_ps7 CONFIG.PCW_SPI1_PERIPHERAL_ENABLE 0
  ad_ip_parameter sys_ps7 CONFIG.PCW_I2C0_PERIPHERAL_ENABLE 0
  ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_PERIPHERAL_ENABLE 1
-@@ -54,16 +60,28 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_UART1_IO {MIO 12 .. 13}
+@@ -61,16 +67,28 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_UART1_IO {MIO 12 .. 13}
  ad_ip_parameter sys_ps7 CONFIG.PCW_I2C1_PERIPHERAL_ENABLE 0
  ad_ip_parameter sys_ps7 CONFIG.PCW_QSPI_PERIPHERAL_ENABLE 1
  ad_ip_parameter sys_ps7 CONFIG.PCW_QSPI_GRP_SINGLE_SS_ENABLE 1
@@ -388,10 +388,10 @@ index 59611ccc8..e7bc2c396 100644
  set_property SLEW FAST [get_ports *ddr_dqs*]
  set_property PACKAGE_PIN C2 [get_ports ddr_dqs_p[0]]
 diff --git a/projects/pluto/system_project.tcl b/projects/pluto/system_project.tcl
-index 89d81a44..fec220a1 100644
+index 3c5d49aa2..e0a21310e 100644
 --- a/projects/pluto/system_project.tcl
 +++ b/projects/pluto/system_project.tcl
-@@ -3,7 +3,7 @@ source ../scripts/adi_env.tcl
+@@ -7,7 +7,7 @@ source ../../scripts/adi_env.tcl
  source $ad_hdl_dir/projects/scripts/adi_project_xilinx.tcl
  source $ad_hdl_dir/projects/scripts/adi_board.tcl
  
@@ -399,3 +399,4 @@ index 89d81a44..fec220a1 100644
 +adi_project_create pluto 0 {} "xc7z010clg400-1"
  
  adi_project_files pluto [list \
+   "system_top.v" \
