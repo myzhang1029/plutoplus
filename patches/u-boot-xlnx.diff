@@ -78,3 +78,26 @@ index fd50caf450..9765ca4a08 100644
  	"adi_loadvals_pluto=if test -n \"${ad936x_ext_refclk}\" && test ! -n \"${ad936x_skip_ext_refclk}\"; then " \
  			"fdt set /clocks/clock@0 clock-frequency ${ad936x_ext_refclk}; " \
  		"fi; " \
+diff --git a/include/libfdt.h b/include/libfdt.h
+index 74b1d149c2..77b72855e3 100644
+--- a/include/libfdt.h
++++ b/include/libfdt.h
+@@ -1,5 +1,6 @@
+ #ifndef _LIBFDT_H
+ #define _LIBFDT_H
++#define LIBFDT_H
+ /*
+  * libfdt - Flat Device Tree manipulation
+  * Copyright (C) 2006 David Gibson, IBM Corporation.
+diff --git a/include/libfdt_env.h b/include/libfdt_env.h
+index 273b5d30f8..ffddb0d04c 100644
+--- a/include/libfdt_env.h
++++ b/include/libfdt_env.h
+@@ -8,6 +8,7 @@
+ 
+ #ifndef _LIBFDT_ENV_H
+ #define _LIBFDT_ENV_H
++#define LIBFDT_ENV_H
+ 
+ #include "compiler.h"
+ #include "linux/types.h"
