@@ -10,7 +10,7 @@ index c618d98b54..c318383554 100644
  	};
  
  	memory {
-@@ -75,3 +76,8 @@
+@@ -75,3 +76,12 @@
  	dr_mode = "host";
  	usb-phy = <&usb_phy0>;
  };
@@ -19,6 +19,10 @@ index c618d98b54..c318383554 100644
 +	u-boot,dm-pre-reloc;
 +	status = "okay";
 +};
++
++&gem0 {
++	local-mac-address = [00 0a 35 00 02 90];
++}
 \ No newline at end of file
 diff --git a/configs/zynq_pluto_defconfig b/configs/zynq_pluto_defconfig
 index 0daf46221e..5991fa6cf7 100644
