@@ -1,5 +1,5 @@
 diff --git a/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts b/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts
-index fe5569225fd3..c2aac78d99cf 100644
+index fe5569225fd3..55955e6b5233 100644
 --- a/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts
 +++ b/arch/arm/boot/dts/zynq-pluto-sdr-revc.dts
 @@ -17,21 +17,6 @@
@@ -66,7 +66,7 @@ index fe5569225fd3..c2aac78d99cf 100644
  	leds {
  		compatible = "gpio-leds";
  		led0 {
-@@ -140,3 +107,18 @@ channel@1 {
+@@ -140,3 +107,19 @@ channel@1 {
  		};
  	};
  };
@@ -76,6 +76,7 @@ index fe5569225fd3..c2aac78d99cf 100644
 +
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&pinctrl_gem0_default>;
++	local-mac-address = [00 0a 35 00 02 90];
 +};
 +
 +&usb0 {
@@ -86,7 +87,7 @@ index fe5569225fd3..c2aac78d99cf 100644
 +	pinctrl-0 = <&pinctrl_usb0_default>;
 +};
 diff --git a/arch/arm/boot/dts/zynq-pluto-sdr.dtsi b/arch/arm/boot/dts/zynq-pluto-sdr.dtsi
-index 08c5a42204f3..f6ba1d90b8c0 100644
+index 08c5a42204f3..532f25569470 100644
 --- a/arch/arm/boot/dts/zynq-pluto-sdr.dtsi
 +++ b/arch/arm/boot/dts/zynq-pluto-sdr.dtsi
 @@ -30,10 +30,25 @@ ad9364_clkin: clock@0 {
