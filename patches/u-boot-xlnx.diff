@@ -22,7 +22,7 @@ index c618d98b54..2c39f63a6e 100644
 +
 +&gem0 {
 +	local-mac-address = [00 0a 35 00 02 90];
-+}
++};
 \ No newline at end of file
 diff --git a/configs/zynq_pluto_defconfig b/configs/zynq_pluto_defconfig
 index 0daf46221e..5991fa6cf7 100644
