@@ -108,3 +108,30 @@ index 6203766e04..6c4cf1266b 100644
 +BR2_PACKAGE_FFMPEG_DEMUXERS="aac h264 mpegts mpegvideo pcm_s16le rawvideo rtp hevc flv dvbsub"
 +BR2_PACKAGE_FFMPEG_PARSERS="aac h264 mjpeg mpegaudio mpegvideo hevc"
 +#BR2_PACKAGE_STRACE=y
+diff --git a/package/libffi/libffi.hash b/package/libffi/libffi.hash
+index 8d2349ec21..75be5bbcef 100644
+--- a/package/libffi/libffi.hash
++++ b/package/libffi/libffi.hash
+@@ -1,4 +1,4 @@
+ # Locally calculated
+-sha256  d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676  libffi-3.4.4.tar.gz
++sha256  bc9842a18898bfacb0ed1252c4febcc7e78fa139fd27fdc7a3e30d9d9356119b  libffi-3.4.8.tar.gz
+ # License files, locally calculated
+-sha256  2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388  LICENSE
++sha256  67894089811f93fca47a76f85e017da6f8582d4ba0905963c6e0f1ad6df7a195  LICENSE
+diff --git a/package/libffi/libffi.mk b/package/libffi/libffi.mk
+index 8f6844113c..de7639f971 100644
+--- a/package/libffi/libffi.mk
++++ b/package/libffi/libffi.mk
+@@ -4,9 +4,9 @@
+ #
+ ################################################################################
+ 
+-LIBFFI_VERSION = 3.4.4
++LIBFFI_VERSION = 3.4.8
+ LIBFFI_SITE = \
+-	https://github.com/libffi/libffi/releases/download/v$(LIBFFI_VERSION)
++	https://github.com/libffi/libffi/releases/download/v$(LIBFFI_VERSION)/libffi-$(LIBFFI_VERSION).tar.gz
+ LIBFFI_LICENSE = MIT
+ LIBFFI_LICENSE_FILES = LICENSE
+ LIBFFI_CPE_ID_VENDOR = libffi_project
