@@ -1,23 +1,56 @@
 diff --git a/Makefile b/Makefile
-index 0b2e57a..cd09e04 100644
+index 0b2e57a..b28999d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -61,6 +61,8 @@ TARGET_DTS_FILES:=$(foreach dts,$(TARGET_DTS_FILES),build/$(dts))
+@@ -59,8 +59,10 @@ endif
+ TARGET_DTS_FILES:=$(foreach dts,$(TARGET_DTS_FILES),build/$(dts))
+ 
  TOOLCHAIN:
- 	make -C buildroot ARCH=arm zynq_$(TARGET)_defconfig
- 	make -C buildroot toolchain
-+	( cd buildroot/output/host/bin; for i in *; do newname="$$(echo "$$i"|sed s/arm-none-linux-gnueabihf-/arm-linux-gnueabihf-/)"; test -L "$$newname" && rm "$$newname"; ln -s "$$(realpath "$$i")" "$$newname" || true; done )
-+	( cd buildroot/output/host/opt/ext-toolchain/bin; for i in *; do newname="$$(echo "$$i"|sed s/arm-none-linux-gnueabihf-/arm-linux-gnueabihf-/)"; test -L "$$newname" && rm "$$newname"; ln -s "$$(realpath "$$i")" "$$newname" || true; done )
+-	make -C buildroot ARCH=arm zynq_$(TARGET)_defconfig
+-	make -C buildroot toolchain
++	+$(MAKE) -C buildroot ARCH=arm zynq_$(TARGET)_defconfig
++	+$(MAKE) -C buildroot toolchain
++	( cd buildroot/output/host/bin; for i in *; do newname="$$(echo "$$i"|sed s/arm-none-linux-gnueabihf-/arm-linux-gnueabihf-/)"; test -L "$$newname" && ( echo "$$i" | grep arm-none-linux-gnueabihf; ) && rm "$$newname"; ln -s "$$(realpath "$$i")" "$$newname" || true; done )
++	( cd buildroot/output/host/opt/ext-toolchain/bin; for i in *; do newname="$$(echo "$$i"|sed s/arm-none-linux-gnueabihf-/arm-linux-gnueabihf-/)"; test -L "$$newname" && ( echo "$$i" | grep arm-none-linux-gnueabihf; ) && rm "$$newname"; ln -s "$$(realpath "$$i")" "$$newname" || true; done )
  
  build:
  	mkdir -p $@
-@@ -90,6 +90,7 @@ build/uboot-env.bin: build/uboot-env.txt
+@@ -73,7 +75,7 @@ build:
+ 
+ u-boot-xlnx/u-boot u-boot-xlnx/tools/mkimage: TOOLCHAIN
+ 	$(TOOLS_PATH) make -C u-boot-xlnx ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) zynq_$(TARGET)_defconfig
+-	$(TOOLS_PATH) make -C u-boot-xlnx ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) UBOOTVERSION="$(UBOOT_VERSION)"
++	+$(TOOLS_PATH) $(MAKE) -C u-boot-xlnx ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) UBOOTVERSION="$(UBOOT_VERSION)"
+ 
+ .PHONY: u-boot-xlnx/u-boot
+ 
+@@ -90,7 +92,8 @@ build/uboot-env.bin: build/uboot-env.txt
  
  linux/arch/arm/boot/zImage: TOOLCHAIN
  	$(TOOLS_PATH) make -C linux ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) zynq_$(TARGET)_defconfig
+-	$(TOOLS_PATH) make -C linux -j $(NCORES) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) zImage UIMAGE_LOADADDR=0x8000
 +	$(TOOLS_PATH) make -C linux ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) menuconfig
- 	$(TOOLS_PATH) make -C linux -j $(NCORES) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) zImage UIMAGE_LOADADDR=0x8000
++	+$(TOOLS_PATH) $(MAKE) -C linux -j $(NCORES) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) zImage UIMAGE_LOADADDR=0x8000
  
+ 
+ .PHONY: linux/arch/arm/boot/zImage
+@@ -102,7 +105,7 @@ build/zImage: linux/arch/arm/boot/zImage | build
+ ### Device Tree ###
+ 
+ linux/arch/arm/boot/dts/%.dtb: TOOLCHAIN linux/arch/arm/boot/dts/%.dts  linux/arch/arm/boot/dts/zynq-pluto-sdr.dtsi
+-	$(TOOLS_PATH) DTC_FLAGS=-@ make -C linux -j $(NCORES) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) $(notdir $@)
++	+$(TOOLS_PATH) DTC_FLAGS=-@ $(MAKE) -C linux -j $(NCORES) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) $(notdir $@)
+ 
+ build/%.dtb: linux/arch/arm/boot/dts/%.dtb | build
+ 	dtc -q -@ -I dtb -O dts $< | sed 's/axi {/amba {/g' | dtc -q -@ -I dts -O dtb -o $@
+@@ -120,7 +123,7 @@ ifneq (1, ${SKIP_LEGAL})
+ 	cp build/LICENSE.html buildroot/board/$(TARGET)/msd/LICENSE.html
+ endif
+ 
+-	make -C buildroot BUSYBOX_CONFIG_FILE=$(CURDIR)/buildroot/board/$(TARGET)/busybox-1.25.0.config all
++	+$(MAKE) -C buildroot BUSYBOX_CONFIG_FILE=$(CURDIR)/buildroot/board/$(TARGET)/busybox-1.25.0.config all
+ 
+ .PHONY: buildroot/output/images/rootfs.cpio.gz
  
 diff --git a/scripts/pluto.its b/scripts/pluto.its
 index e69e417..aa7fa08 100644
